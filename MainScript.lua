@@ -1,40 +1,62 @@
 --MainScript
--- Loadingアニメーション表示
+--ローディング
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Loading GUI
-local loadingGui = Instance.new("ScreenGui", playerGui)
-loadingGui.Name = "LoadingGUI"
+local loadingGui = Instance.new("ScreenGui")
+loadingGui.Name = "LoadingGui"
 loadingGui.ResetOnSpawn = false
+loadingGui.Parent = playerGui
 
-local loadingLabel = Instance.new("TextLabel", loadingGui)
-loadingLabel.Size = UDim2.new(0, 200, 0, 50)
-loadingLabel.Position = UDim2.new(0.5, -100, 0.5, -25)
+-- Frameで中央に寄せる
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 200, 0, 60)
+frame.Position = UDim2.new(0.5, -100, 0.5, -30)
+frame.BackgroundTransparency = 1
+frame.Parent = loadingGui
+
+-- タイトル（赤文字）
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0.5, 0)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "Error Executor"
+titleLabel.TextColor3 = Color3.fromRGB(255, 50, 50)
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.TextSize = 20
+titleLabel.TextStrokeTransparency = 0.5
+titleLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+titleLabel.Parent = frame
+
+-- Loading...（白文字）
+local loadingLabel = Instance.new("TextLabel")
+loadingLabel.Size = UDim2.new(1, 0, 0.5, 0)
+loadingLabel.Position = UDim2.new(0, 0, 0.5, 0)
 loadingLabel.BackgroundTransparency = 1
-loadingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-loadingLabel.Font = Enum.Font.GothamBold
-loadingLabel.TextSize = 28
 loadingLabel.Text = "Loading."
-loadingLabel.Name = "LoadingLabel"
+loadingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+loadingLabel.Font = Enum.Font.Gotham
+loadingLabel.TextSize = 18
+loadingLabel.Parent = frame
 
--- アニメーション処理
-task.spawn(function()
-	local dots = {".", "..", "...", ""}
-	local index = 1
-	local startTime = tick()
-	while tick() - startTime < 5 do
-		loadingLabel.Text = "Loading" .. dots[index]
-		index = index % #dots + 1
-		task.wait(0.5)
-	end
-	loadingGui:Destroy()
-	-- ↓ ここから元のGUI作成処理（MainFrameなど）を続けてください ↓
-local success, err = pcall(function()
-	local scriptUrl = "https://raw.githubusercontent.com/works-yesed-scriptedit/ErrorExecutor/refs/heads/main/MainScript.lua"
-	queueonteleport("loadstring(game:HttpGet('" .. scriptUrl .. "'))()")
-end)
+-- アニメーション表示
+local dots = {".", "..", "..."}
+local startTime = tick()
+local index = 1
+while tick() - startTime < 5 do
+	loadingLabel.Text = "Loading" .. dots[index]
+	index = index % #dots + 1
+	task.wait(0.5)
+end
+
+-- 表示終了して削除
+loadingGui:Destroy()
+
+-- 1秒待って本体処理へ
+task.wait(1)
+
+-- ← ここからGUI生成コードなどを実行
 -- GUIの親（StarterGuiなどに入れる用）
 local ScreenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
 ScreenGui.ResetOnSpawn = false
