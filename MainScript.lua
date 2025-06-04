@@ -1,4 +1,8 @@
 --MainScript
+local success, err = pcall(function()
+	local scriptUrl = "https://raw.githubusercontent.com/works-yesed-scriptedit/ErrorExecutor/refs/heads/main/MainScript.lua"
+	queueonteleport("loadstring(game:HttpGet('" .. scriptUrl .. "'))()")
+end)
 -- GUIの親（StarterGuiなどに入れる用）
 local ScreenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
 ScreenGui.ResetOnSpawn = false
