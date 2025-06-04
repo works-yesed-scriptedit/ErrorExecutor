@@ -1,4 +1,36 @@
 --MainScript
+-- Loadingアニメーション表示
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Loading GUI
+local loadingGui = Instance.new("ScreenGui", playerGui)
+loadingGui.Name = "LoadingGUI"
+loadingGui.ResetOnSpawn = false
+
+local loadingLabel = Instance.new("TextLabel", loadingGui)
+loadingLabel.Size = UDim2.new(0, 200, 0, 50)
+loadingLabel.Position = UDim2.new(0.5, -100, 0.5, -25)
+loadingLabel.BackgroundTransparency = 1
+loadingLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+loadingLabel.Font = Enum.Font.GothamBold
+loadingLabel.TextSize = 28
+loadingLabel.Text = "Loading."
+loadingLabel.Name = "LoadingLabel"
+
+-- アニメーション処理
+task.spawn(function()
+	local dots = {".", "..", "...", ""}
+	local index = 1
+	local startTime = tick()
+	while tick() - startTime < 5 do
+		loadingLabel.Text = "Loading" .. dots[index]
+		index = index % #dots + 1
+		task.wait(0.5)
+	end
+	loadingGui:Destroy()
+	-- ↓ ここから元のGUI作成処理（MainFrameなど）を続けてください ↓
 local success, err = pcall(function()
 	local scriptUrl = "https://raw.githubusercontent.com/works-yesed-scriptedit/ErrorExecutor/refs/heads/main/MainScript.lua"
 	queueonteleport("loadstring(game:HttpGet('" .. scriptUrl .. "'))()")
