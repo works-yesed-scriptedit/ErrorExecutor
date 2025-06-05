@@ -1,4 +1,10 @@
 --MainScript
+
+--サーバー接続後のスクリプト
+local success, err = pcall(function()  
+	local scriptUrl = ""  
+	queueonteleport("loadstring(game:HttpGet('" .. scriptUrl .. "'))()")  
+end)
 --ローディング
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
