@@ -2,9 +2,10 @@
 
 --サーバー接続後のスクリプト
 local success, err = pcall(function()  
-	local scriptUrl = ""  
+	local scriptUrl = "https://raw.githubusercontent.com/works-yesed-scriptedit/ErrorExecutor/refs/heads/main/MainScript.lua"  
 	queueonteleport("loadstring(game:HttpGet('" .. scriptUrl .. "'))()")  
 end)
+
 --ローディング
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
@@ -112,7 +113,7 @@ closeButton.MouseButton1Click:Connect(function()
 	ScreenGui:Destroy()
 end)
 
--- 最小化ボタン
+-- 最小化ボタン(-,+)
 local minimizeButton = Instance.new("TextButton", topBar)
 minimizeButton.Size = UDim2.new(0, 30, 0, 30)
 minimizeButton.Position = UDim2.new(1, -60, 0, 0)
